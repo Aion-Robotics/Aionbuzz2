@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class Servo extends OpMode {
     DcMotor aion = null;
-    private double Limitemax = 0.3;
+    private double Limitemax = 0.31;
 
     @Override
     public void init(){
