@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Testes;
 
-import android.annotation.TargetApi;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,10 +16,10 @@ public class Teste_intake extends OpMode {
     }
     @Override
     public void loop(){
-        if (gamepad1.a){
-            motor.setPower(1*limit1);
-        } else if (gamepad1.b) {
-            motor.setPower(1*limit2);
+        if (gamepad1.left_trigger_pressed){
+            motor.setPower(1.0);
+        } else if (gamepad1.left_bumper) {
+            motor.setPower(1.0*limit2);
         }
         else
             motor.setPower(0);
