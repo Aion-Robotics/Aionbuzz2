@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class Teste_intake extends OpMode {
     DcMotor motor = null;
-    private final double limit1 = 0.25;
-    private final double limit2 = 0.5;
+    private final double limit1 = 0.5;
+    private final double limit2 = 1.0;
 
     @Override
     public void init(){

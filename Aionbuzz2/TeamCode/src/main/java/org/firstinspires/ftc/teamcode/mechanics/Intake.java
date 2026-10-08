@@ -6,9 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
 public class Intake extends OpMode {
-
     DcMotor aion = null;
-
     double limite = 0.25;
 
     @Override
@@ -17,8 +15,12 @@ public class Intake extends OpMode {
     }
 
     @Override
-public void loop(){
+    public void loop(){
+        if(gamepad1.a){limite = 0.5;}
+        else if (gamepad1.b) {limite = 0.75;}
+        else { limite = 0.25;}
 
-    if (gamepad1.a)
+        telemetry.addData("Potência", (-gamepad1.right_trigger*limite)*312+" RPM");
+                aion.setPower(-gamepad1.right_trigger*limite);
     }
 }
