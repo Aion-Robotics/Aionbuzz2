@@ -12,10 +12,10 @@ public class ServoTestR extends OpMode {
     double servoPosition = 0.5;
     // Ângulo de cada toque rápido
     double tapstep = 5.0 / 180.0;
-    // Velocida do movimento enquanto segura
+    // Velocidade do movimento enquanto segura
     double holdstep = 0.003;
     // Tempo necessário para considerar que está segurando
-    double holdDelay = 0.15; // 250 ms
+    double holdDelay = 0.15; // 150 ms
     boolean lastDpadUp = false;
     boolean lastDpadDown = false;
     ElapsedTime upTimer = new ElapsedTime();
@@ -67,7 +67,7 @@ public class ServoTestR extends OpMode {
         }
         bench.setServoPos(servoPosition);
 
-        // Guarda o estado anterior dos botões
+        // Guarda o estado anterior dos botões //
 
         lastDpadUp = gamepad1.dpad_up;
         lastDpadDown = gamepad1.dpad_down;

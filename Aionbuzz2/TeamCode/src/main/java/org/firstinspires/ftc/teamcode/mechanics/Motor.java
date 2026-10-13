@@ -7,8 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
 public class Motor extends OpMode {
-    DcMotor motorEsq = null;
-    DcMotor motorDir = null;
+    DcMotor motorEsq, motorDir = null;
     double stickY;
     double stickX;
 
@@ -21,7 +20,9 @@ public class Motor extends OpMode {
     @Override
     public void loop() {
         double ticks = motorEsq.getCurrentPosition();
-        double cm = (ticks / 1425.2) * ((7.2 * Math.PI) * 3);
+        // mudar o nome dessa variável para não confundir com a variável da linha 38
+
+        double cm2 = (ticks / 1425.2) * ((7.2 * Math.PI) * 3);
 
         stickY = -gamepad1.left_stick_y;
         stickX = gamepad1.left_stick_x;
@@ -31,17 +32,18 @@ public class Motor extends OpMode {
         motorEsq.setPower(leftMove);
 
         telemetry.addData("Issued ticks", ticks);
-        telemetry.addData("Distance (cm)", cm);
+        telemetry.addData("Distance (cm)", cm2);
 
-        double ticks = motorDir.getCurrentPosition();
+        double ticks2 = motorDir.getCurrentPosition();
+        // mudar o nome dessa variável para não confundir com a variável da linha 23
         double cm = (ticks / 1425.2) * ((7.2 * Math.PI) * 3);
+
 
         stickY = -gamepad1.left_stick_y;
         stickX = gamepad1.left_stick_x;
 
         double rightMove = Range.clip(stickY - stickX, -0.75, 0.75);
-
-        motorEsq.setPower(rightMove);
+        motorDir.setPower(rightMove);
 
         telemetry.addData("Issued ticks", ticks);
         telemetry.addData("Distance (cm)", cm);
