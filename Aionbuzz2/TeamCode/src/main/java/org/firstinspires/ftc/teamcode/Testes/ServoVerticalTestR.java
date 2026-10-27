@@ -7,11 +7,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.mechanics.TestBenchServoR;
 
 @TeleOp
-public class ServoTestR extends OpMode {
+public class ServoVerticalTestR extends OpMode {
     TestBenchServoR bench = new TestBenchServoR();
     double servoPosition = 0.5;
     // Ângulo de cada toque rápido
-    double tapstep = 5.0 / 180.0;
+    double tapstep = 5.0 / 300.0;
     // Velocidade do movimento enquanto segura
     double holdstep = 0.003;
     // Tempo necessário para considerar que está segurando
@@ -24,35 +24,36 @@ public class ServoTestR extends OpMode {
     @Override
     public void init(){
         bench.init(hardwareMap);
-        bench.setServoPos(servoPosition);
+        bench.setServoPosVert(servoPosition);
     }
     @Override
     public void loop() {
         // ------------ DpadUp -------------- //
-        if(gamepad1.dpad_up && !lastDpadUp){
+        /*
+        if(-gamepad1.right_stick_y && !lastDpadUp){
             upTimer.reset();
         }
-        if(gamepad1.dpad_up){
+        if(-gamepad1.right_stick_y){
             if(upTimer.seconds() >= holdDelay){
                 servoPosition += holdstep;
             }
         }
-        if(!gamepad1.dpad_up && lastDpadUp){
+        if(-gamepad1.right_stick_y && lastDpadUp){
             if(upTimer.seconds() < holdDelay){
                 servoPosition += tapstep;
             }
         }
 
         // ------------ DpadDown ------------ //
-        if(gamepad1.dpad_down && !lastDpadDown){
+        if(!-gamepad1.right_stick_y && !lastDpadDown){
             downTimer.reset();
         }
-        if(gamepad1.dpad_down){
+        if(!-gamepad1.right_stick_y){
             if(downTimer.seconds() >= holdDelay){
                 servoPosition -= holdstep;
             }
         }
-        if(!gamepad1.dpad_down && lastDpadDown){
+        if(!-gamepad1.right_stick_y && lastDpadDown){
             if(downTimer.seconds() < holdDelay){
                 servoPosition -= tapstep;
             }
@@ -65,17 +66,18 @@ public class ServoTestR extends OpMode {
         if(servoPosition < 0.0){
             servoPosition = 0.0;
         }
-        bench.setServoPos(servoPosition);
+        bench.setServoPosVert(servoPosition);
 
         // Guarda o estado anterior dos botões //
 
-        lastDpadUp = gamepad1.dpad_up;
-        lastDpadDown = gamepad1.dpad_down;
+        lastDpadUp =  - gamepad1.right_stick_y ;
+        lastDpadDown = gamepad1.right_stick_y;
 
         //------------ telemetry ------------- //
 
         telemetry.addData("Posição", servoPosition);
         telemetry.addData("Ângulo aproximado", servoPosition * 180);
         telemetry.update();
+         */
     }
 }

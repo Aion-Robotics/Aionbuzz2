@@ -21,5 +21,6 @@ public class TankDrive extends RepositoryRobot {
         moveRobot();
         energyIntake();
         servoCR();
+        motorShooter();
         }
     }
