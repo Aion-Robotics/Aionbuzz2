@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class ShooterV2 extends OpMode {
-
     DcMotorEx motorShooter = null;
     private Servo servoGate;
     private double servoBloq = 0.0;
@@ -16,12 +15,11 @@ public class ShooterV2 extends OpMode {
     private boolean bloqueado = true;
     final static double maxRPM = 6000;
     double limite = 0.0;
-    double ticksPorVolta = 28.0;
-    double tolerancia = 0.05;
+    double ticksPorVolta = 28.0; // ticks emitido pelo motor modificado
+    double tolerancia = 0.05; // diferença entre a velocidade solicitada e atual
     long temoEstavelNanos = 250_000_000L;
     long inicioEstabilidade = -1;
     boolean pronto = false;
-
 
     @Override
     public void init() {
@@ -30,7 +28,7 @@ public class ShooterV2 extends OpMode {
         motorShooter.setPower(0);
 
         servoGate = hardwareMap.get(Servo.class, "servoGate");
-        bloquear();
+        bloquear(); // servo que iremos usar para o mecanismo dde trava
     }
 
     public void bloquear() {
@@ -51,20 +49,22 @@ public class ShooterV2 extends OpMode {
         } else if (gamepad1.y) {
             limite = 0.90;
         } else if (gamepad1.x) {
-            limite = 0.95;
-        } else if (gamepad1.right_trigger_pressed) {
+            limite = 0.95;}
+        else if (gamepad1.right_bumper){
+            limite = limite*-1;}
+        else {
             limite = 0;
         }
 
         double alvoRPM = maxRPM * limite;
-        double alvoTicks = alvoRPM * ticksPorVolta / 60.0;
+        double alvoTicks = (alvoRPM * ticksPorVolta) / 60.0;
 
-        motorShooter.setVelocity(alvoTicks);
+        motorShooter.setVelocity(-alvoTicks);
         double velocidadeTicks = Math.abs(motorShooter.getVelocity());
         double velocidadeRPM = velocidadeTicks * 60 / ticksPorVolta;
 
         boolean dentroDaFaixa =
-                alvoRPM > 0
+                alvoRPM > 00
                         && velocidadeRPM >=
                         alvoRPM * (1.0 - tolerancia)
                         && velocidadeRPM <=

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.mechanics;
+package org.firstinspires.ftc.teamcode.Testes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.mechanics;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -66,15 +66,12 @@ public class RepositoryRobot extends OpMode {
         /* Se o robô estiver não se movendo, as rodas travam,
          impedindo um movimento involuntário por interferência externa */
 
-        if((leftMove == 0.0) && (rightMove == 0.0))
-            stateMotor = DcMotor.ZeroPowerBehavior.BRAKE; // BRAKE --> Trava as rodas
-        else
-            stateMotor = DcMotor.ZeroPowerBehavior.FLOAT; // FLOAT: --> Destrava as rodas
+        stateMotor = ((leftMove == 0) && (rightMove == 0)) ?
+                DcMotor.ZeroPowerBehavior.BRAKE : DcMotor.ZeroPowerBehavior.FLOAT;
 
         for (int i = 0; i < 2; i++)
             motor[i].setZeroPowerBehavior(stateMotor);
     }
-
     public void energyIntake() {
         if (gamepad1.left_bumper) { // Se e o botão LB é pressionado, o intake funciona
             motor[2].setPower(0.75);

@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.mechanics;
+package org.firstinspires.ftc.teamcode.Testes;
 
 
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;

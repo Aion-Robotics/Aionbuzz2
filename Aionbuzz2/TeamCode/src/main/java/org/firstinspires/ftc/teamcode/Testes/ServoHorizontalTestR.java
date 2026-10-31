@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.Testes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.mechanics.TestBenchServoR;
-
 @TeleOp
 public class ServoHorizontalTestR extends OpMode {
    TestBenchServoR bench = new TestBenchServoR();

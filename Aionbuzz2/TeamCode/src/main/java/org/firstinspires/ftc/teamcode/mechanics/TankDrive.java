@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.mechanics;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.RepositoryRobot;
-
 @TeleOp
 public class TankDrive extends RepositoryRobot {
     @Override
