@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
 public class ServoVerticalTestR extends OpMode {
-    TestBenchServoR bench = new TestBenchServoR();
+    TestBenchR bench = new TestBenchR();
     double servoPosition = 0.5;
     // Ângulo de cada toque rápido
     double tapstep = 5.0 / 300.0;

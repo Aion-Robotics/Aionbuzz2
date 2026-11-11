@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
 public class ServoHorizontalTestR extends OpMode {
-   TestBenchServoR bench = new TestBenchServoR();
+   TestBenchR bench = new TestBenchR();
     double posHor = 0.5;
     double posVert = 0.5;
     double speed = 0.01;

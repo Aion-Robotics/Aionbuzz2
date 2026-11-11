@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.mechanics;
+package org.firstinspires.ftc.teamcode.Mechanisms.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -43,13 +43,13 @@ public class ShooterV2 extends OpMode {
     public void loop() {
 
         if (gamepad1.a) {
-            limite = 0.80;
+            limite = 0.15;
         } else if (gamepad1.b) {
-            limite = 0.85;
+            limite = 0.25;
         } else if (gamepad1.y) {
-            limite = 0.90;
+            limite = 0.3;
         } else if (gamepad1.x) {
-            limite = 0.95;}
+            limite = 0.35;}
         else if (gamepad1.right_bumper){
             limite = limite*-1;}
         else {

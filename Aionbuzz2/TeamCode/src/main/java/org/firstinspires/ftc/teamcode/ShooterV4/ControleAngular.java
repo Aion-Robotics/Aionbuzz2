@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.ShooterV4;
 import com.qualcomm.robotcore.util.Range;
 
 public class ControleAngular {
-        private double anguloAtual;
+
         private double anguloReferencia;
         private double erroAngular;
 
@@ -14,7 +14,7 @@ public class ControleAngular {
             this.kp = kp;
         }
         public void calcular(double atual, double referencia){
-            anguloAtual = atual;
+            double anguloAtual = atual;
             anguloReferencia = referencia;
 
             erroAngular = ((referencia - atual + 540) % 360) - 180;

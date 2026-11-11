@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.Shooter;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
+@TeleOp
 public class ShooterV3 extends OpMode {
-
-   private Servo servoAngulacao;
+    private Servo servoAngulacao;
         private IMU imu;
 
         private HoodController hood;
