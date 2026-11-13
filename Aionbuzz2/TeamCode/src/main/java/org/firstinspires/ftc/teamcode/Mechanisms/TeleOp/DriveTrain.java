@@ -1,18 +1,26 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
+@Disabled
 @TeleOp (name = "ArcadeDrive")
 public class DriveTrain extends OpMode {
+    ShooterV2 shooter;
+    CRServo servoTransfer;
     DcMotor[] motor = new DcMotor[3];
     public static final double POTENCIA_MAXIMA = 0.5;
+
 
     @Override
     public void init(){
         initHardware();
+        shooter = new ShooterV2(hardwareMap);
+
         telemetry.addData("Hardware Status", "Registered");
     }
 
@@ -24,6 +32,7 @@ public class DriveTrain extends OpMode {
 
         driveRobot();
         runIntakeControl();
+        shooter.pollenRelease(gamepad1, telemetry);
     }
 
     private void initHardware(){
@@ -34,6 +43,8 @@ public class DriveTrain extends OpMode {
 
         // Reverte o sentido de um dos motores da base
         motor[1].setDirection(DcMotor.Direction.REVERSE);
+
+        servoTransfer = hardwareMap.get(CRServo.class, "servoTransfer");
     }
     private double getCurrentDistance(){
         // Calcula a distância percorrida por ambos os motores juntos
@@ -54,7 +65,7 @@ public class DriveTrain extends OpMode {
         double stickX = gamepad1.left_stick_x;
 
         // Se o botão RB é pressionado, os motores funcionam na capacidade máxima
-        if (gamepad1.right_bumper)
+        if (gamepad1.left_bumper)
             currentMax = 1.0;
 
         // Guarda as potências individuais de cada motor
@@ -73,14 +84,27 @@ public class DriveTrain extends OpMode {
     }
     private void runIntakeControl(){
         boolean intakeLigado;
-        if (gamepad1.left_bumper) { // Se o botão LB estiver pressionado, o intake é ligado
-            motor[2].setPower(0.75);
+        boolean transferLigado;
+
+        if (gamepad1.right_bumper) { // Se o botão LB estiver pressionado, o intake é ligado
+            motor[2].setPower(1.0);
             intakeLigado = true;
         }
         else { // Caso contrário, ele permanece desligado
             motor[2].setPower(0.0);
+            servoTransfer.setPower(0.0);
             intakeLigado = false;
         }
+
+        if (gamepad1.right_trigger_pressed){
+            servoTransfer.setPower(-1.0);
+            transferLigado = true;
+        }
+        else{
+            servoTransfer.setPower(0.0);
+            transferLigado = false;
+        }
         telemetry.addData("Intake Status", intakeLigado ? "On" : "Off");
+        telemetry.addData("Transfer Status", transferLigado ? "On" : "Off");
     }
 }

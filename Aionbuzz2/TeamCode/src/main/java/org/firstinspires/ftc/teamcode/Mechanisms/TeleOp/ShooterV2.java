@@ -4,7 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp
 public class ShooterV2 extends OpMode {
@@ -21,14 +25,18 @@ public class ShooterV2 extends OpMode {
     long inicioEstabilidade = -1;
     boolean pronto = false;
 
-    @Override
-    public void init() {
+    public ShooterV2(HardwareMap hardwareMap){
+        this.motorShooter = hardwareMap.get(DcMotorEx.class, "motorShooter");
+        this.servoGate = hardwareMap.get(Servo.class, "servoGate");
+
         motorShooter = hardwareMap.get(DcMotorEx.class, "motorShooter");
         motorShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorShooter.setPower(0);
+        motorShooter.setPower(0.0);
+        bloquear();
+    }
 
-        servoGate = hardwareMap.get(Servo.class, "servoGate");
-        bloquear(); // servo que iremos usar para o mecanismo dde trava
+    @Override
+    public void init() {
     }
 
     public void bloquear() {
@@ -41,15 +49,23 @@ public class ShooterV2 extends OpMode {
 
     @Override
     public void loop() {
+    }
 
+    @Override
+    public void stop() {
+        if (motorShooter != null) {
+            motorShooter.setPower(0);
+        }
+    }
+    public void pollenRelease(Gamepad gamepad, Telemetry telemetry){
         if (gamepad1.a) {
             limite = 0.15;
         } else if (gamepad1.b) {
             limite = 0.25;
-        } else if (gamepad1.y) {
-            limite = 0.3;
         } else if (gamepad1.x) {
-            limite = 0.35;}
+            limite = 0.585;
+        } else if (gamepad1.y) {
+            limite = 0.4675;}
         else if (gamepad1.right_bumper){
             limite = limite*-1;}
         else {
@@ -93,13 +109,6 @@ public class ShooterV2 extends OpMode {
             liberar();
         } else {
             bloquear();
-        }
-    }
-
-    @Override
-    public void stop() {
-        if (motorShooter != null) {
-            motorShooter.setPower(0);
         }
     }
 }
