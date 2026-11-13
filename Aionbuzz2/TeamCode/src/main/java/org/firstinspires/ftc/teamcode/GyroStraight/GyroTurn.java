@@ -103,7 +103,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
             double anguloAlvo = anguloInicial + graus;
 
             // Ganhos do controle PD
-            double kpGiro = -0.04;
+            double kpGiro = 0.04;
             double kdGiro = 0;
 
             double anguloAnterior = anguloInicial;

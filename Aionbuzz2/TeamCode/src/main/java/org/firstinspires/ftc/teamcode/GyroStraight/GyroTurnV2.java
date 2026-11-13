@@ -69,9 +69,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
             pararMotores();
 
-            telemetry.addData("Resultado",
-                    sucesso ? "Curva concluida" : "Tempo esgotado");
-
+            telemetry.addData("Resultado", sucesso ? "Curva concluida" : "Tempo esgotado");
             telemetry.addData("Angulo final", anguloContinuo);
             telemetry.update();
 
@@ -137,27 +135,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 // Calcula o tempo entre leituras
                 long tempoAtual = System.nanoTime();
 
-                double deltaTempo =
-                        (tempoAtual - tempoAnterior)
-                                / 1_000_000_000.0;
+                double deltaTempo = (tempoAtual - tempoAnterior) / 1_000_000_000.0;
 
                 if (deltaTempo <= 0) {
                     deltaTempo = 0.001;
                 }
 
                 // Calcula a velocidade angular
-                double velocidadeAngular =
-                        (anguloAtual - anguloAnterior) / deltaTempo;
+                double velocidadeAngular = (anguloAtual - anguloAnterior) / deltaTempo;
 
                 // Filtra a velocidade
-                velocidadeAngularFiltrada =
-                        0.8 * velocidadeAngularFiltrada
-                                + 0.4 * velocidadeAngular;
+                velocidadeAngularFiltrada = 0.8 * velocidadeAngularFiltrada + 0.4 * velocidadeAngular;
 
                 // Controlador PD
-                double comando =
-                        (kpGiro * erro)
-                                - (kdGiro * velocidadeAngularFiltrada);
+                double comando = (kpGiro * erro) - (kdGiro * velocidadeAngularFiltrada);
 
                 // Limita a potência
                 comando = Range.clip(comando, -0.35, 0.35);
@@ -169,9 +160,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 // Verifica a estabilidade
                 if (Math.abs(erro) < 1 &&
                         Math.abs(velocidadeAngularFiltrada) < 4) {
-
                     leiturasEstaveis++;
-
                     if (leiturasEstaveis >= 5) {
 
                         pararMotores();
@@ -187,22 +176,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 telemetry.addData("Angulo atual", anguloAtual);
                 telemetry.addData("Angulo alvo", anguloAlvo);
                 telemetry.addData("Erro", erro);
-
-                telemetry.addData(
-                        "Velocidade bruta", velocidadeAngular);
-
-                telemetry.addData(
-                        "Velocidade filtrada",
-                        velocidadeAngularFiltrada);
-
+                telemetry.addData("Velocidade bruta", velocidadeAngular);
+                telemetry.addData("Velocidade filtrada", velocidadeAngularFiltrada);
                 telemetry.addData("Potencia", comando);
-
-                telemetry.addData(
-                        "Leituras estaveis", leiturasEstaveis);
-
-                telemetry.addData(
-                        "Tempo", getRuntime());
-
+                telemetry.addData("Leituras estaveis", leiturasEstaveis);
+                telemetry.addData("Tempo", getRuntime());
                 telemetry.update();
 
                 // Atualiza os valores anteriores

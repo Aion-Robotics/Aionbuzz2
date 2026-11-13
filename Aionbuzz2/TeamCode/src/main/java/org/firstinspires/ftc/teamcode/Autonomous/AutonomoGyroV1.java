@@ -40,8 +40,8 @@ public class AutonomoGyroV1 extends LinearOpMode{
 
             RevHubOrientationOnRobot orientacao =
                     new RevHubOrientationOnRobot(
-                            RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
+                            RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+                            RevHubOrientationOnRobot.UsbFacingDirection.UP
                     );
 
             imu.initialize(new IMU.Parameters(orientacao));
@@ -70,7 +70,7 @@ public class AutonomoGyroV1 extends LinearOpMode{
                 pararMotores();
                 return;
             }
-            sleep(2000);
+            sleep(10000);
 
             // ETAPA 2: FAZER CURVA DE 90 GRAUS
             boolean terminouCurva = gyroTurn(90);
@@ -79,7 +79,7 @@ public class AutonomoGyroV1 extends LinearOpMode{
                 pararMotores();
                 return;
             }
-            sleep(2000);
+            sleep(10000);
 
             // ETAPA 3: ANDAR MAIS 150 CM
             boolean segundoDeslocamento = gyroStraight(150);
@@ -161,7 +161,7 @@ public class AutonomoGyroV1 extends LinearOpMode{
                 double desvio = anguloAtual - anguloReferencia;
 
                 // Mantem os valores da correcao que ja funcionaram
-                double kp = -0.012;
+                double kp = -0.018;
 
                 double correcao = desvio * kp;
 

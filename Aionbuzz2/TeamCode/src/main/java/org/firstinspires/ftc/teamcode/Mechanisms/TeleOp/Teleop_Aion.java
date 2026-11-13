@@ -138,13 +138,13 @@ public class Teleop_Aion extends OpMode {
     }
     private void runShooterControl(){
         if (gamepad1.a) {
-            limite = 0.39;
+            limite = 0.425;
         } else if (gamepad1.b) {
-            limite = 0.43;
-        } else if (gamepad1.y) {
-            limite = 0.585;
+            limite = 0.45;
         } else if (gamepad1.x) {
-            limite = 0.4675;}
+            limite = 0.475;
+        } else if (gamepad1.y) {
+            limite = 0.5;}
         else if (gamepad1.right_bumper){
             limite = limite*-1;}
         else {
