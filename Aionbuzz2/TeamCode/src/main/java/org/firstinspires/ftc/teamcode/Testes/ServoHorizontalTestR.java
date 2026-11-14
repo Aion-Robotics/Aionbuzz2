@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.Testes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp
+@Disabled
 public class ServoHorizontalTestR extends OpMode {
    TestBenchR bench = new TestBenchR();
     double posHor = 0.5;

@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 @Disabled
-@TeleOp (name = "ArcadeDrive")
 public class DriveTrain extends OpMode {
     ShooterV2 shooter;
     CRServo servoTransfer;

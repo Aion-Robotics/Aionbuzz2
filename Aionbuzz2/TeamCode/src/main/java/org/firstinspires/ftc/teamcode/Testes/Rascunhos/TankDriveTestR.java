@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.Testes.Rascunhos;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp
+@Disabled
 public class TankDriveTestR extends TestBenchTankDriveR{
     @Override
     public void init(){

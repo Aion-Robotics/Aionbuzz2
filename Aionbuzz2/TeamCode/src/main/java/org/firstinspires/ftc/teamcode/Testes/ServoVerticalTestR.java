@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.Testes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp
+@Disabled
 public class ServoVerticalTestR extends OpMode {
     TestBenchR bench = new TestBenchR();
     double servoPosition = 0.5;
