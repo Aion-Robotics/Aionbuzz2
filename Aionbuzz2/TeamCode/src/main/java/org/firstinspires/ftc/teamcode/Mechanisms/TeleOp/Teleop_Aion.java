@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp (name = "TeleOp-Aion")
+@TeleOp
 public class Teleop_Aion extends OpMode {
     DcMotor[] motor = new DcMotor[3];
     DcMotorEx motorShooter = null;

@@ -4,27 +4,77 @@ import com.qualcomm.robotcore.util.Range;
 
 public class ControleAngular {
 
-        private double anguloReferencia;
-        private double erroAngular;
+    // CONSTANTES DO CONTROLE
 
-        private double kp;
-        private double resposta;
+    double Kp;
 
-        public ControleAngular(double kp){
-            this.kp = kp;
-        }
-        public void calcular(double atual, double referencia){
-            double anguloAtual = atual;
-            anguloReferencia = referencia;
+    double erroAngular = 0;
+    double resposta = 0;
 
-            erroAngular = ((referencia - atual + 540) % 360) - 180;
-            resposta = kp * Math.abs(erroAngular);
-            resposta = Range.clip(resposta,0,1);
-        }
-        public double getErroAngular(){
-            return erroAngular;
-        }
-        public double getResposta(){
-            return resposta;
-        }
+    double potenciaMaxima = 0.4;
+    double potenciaMinima = 0.0;
+
+    // CONSTRUTOR
+
+    public ControleAngular(double Kp) {
+        this.Kp = Kp;
     }
+
+    // CALCULO DO ERRO ANGULAR
+
+    public void calcular(
+            double anguloAtual,
+            double anguloReferencia) {
+
+        erroAngular = anguloReferencia - anguloAtual;
+
+        // Normalização do erro entre -180 e +180 graus
+
+        while (erroAngular > 180) {
+            erroAngular -= 360;
+        }
+
+        while (erroAngular < -180) {
+            erroAngular += 360;
+        }
+
+        // CONTROLE PROPORCIONAL
+
+        resposta = erroAngular * Kp;
+
+        // LIMITAÇÃO DA POTÊNCIA
+
+        resposta = Range.clip(
+                resposta,
+                -potenciaMaxima,
+                potenciaMaxima
+        );
+
+        // CORREÇÃO PARA EVITAR POTÊNCIA MUITO PEQUENA
+
+        if (Math.abs(erroAngular) > 2.0
+                && Math.abs(resposta) < potenciaMinima) {
+
+            resposta = Math.signum(resposta) * potenciaMinima;
+        }
+
+    }
+
+    // RETORNA O ERRO ANGULAR
+
+    public double getErroAngular() {
+        return erroAngular;
+    }
+
+    // RETORNA A RESPOSTA PROPORCIONAL
+
+    public double getResposta() {
+        return resposta;
+    }
+
+    // ALTERA O GANHO PROPORCIONAL
+
+    public void setKp(double Kp) {
+        this.Kp = Kp;
+    }
+}

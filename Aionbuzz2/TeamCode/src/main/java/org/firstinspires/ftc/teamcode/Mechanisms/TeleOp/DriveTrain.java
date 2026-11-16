@@ -5,33 +5,37 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Shooter.Shooter;
+
 @Disabled
+@TeleOp(name = "TeleOp")
 public class DriveTrain extends OpMode {
-    ShooterV2 shooter;
+    Shooter shooter;
     CRServo servoTransfer;
     DcMotor[] motor = new DcMotor[3];
     public static final double POTENCIA_MAXIMA = 0.5;
+    public static final double TICKS_POR_VOLTA = 537.6;
+    public static final double CIRCUNFERENCIA_RODA = 9.6 * Math.PI;
 
 
     @Override
     public void init(){
         initHardware();
-        shooter = new ShooterV2(hardwareMap);
-
-        telemetry.addData("Hardware Status", "Registered");
+        telemetry.addData("Status do Hardware", "Registrado");
     }
 
     @Override
     public void loop(){
         // Odometria
         double totalDistance = getCurrentDistance();
-        telemetry.addData("Distance", "%.1f cm", totalDistance);
+        telemetry.addData("Distância", "%.1f cm", totalDistance);
 
         driveRobot();
         runIntakeControl();
-        shooter.pollenRelease(gamepad1, telemetry);
+        shooter.handleShooting(gamepad1, telemetry);
     }
 
     private void initHardware(){
@@ -40,17 +44,28 @@ public class DriveTrain extends OpMode {
         motor[1] = hardwareMap.get(DcMotor.class, "motorEsq");
         motor[2] = hardwareMap.get(DcMotor.class, "motorIntake");
 
-        // Reverte o sentido de um dos motores da base
-        motor[1].setDirection(DcMotor.Direction.REVERSE);
-
+        // Registra o servo do Transfer e a instância do Shooter
         servoTransfer = hardwareMap.get(CRServo.class, "servoTransfer");
+        shooter = new Shooter(hardwareMap);
+
+        // Reverte o sentido de um dos motores da base e do servo
+        motor[1].setDirection(DcMotor.Direction.REVERSE);
+        servoTransfer.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        // Reseta os ticks na inicialização
+        motor[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Induz os motores a funcionarem com suporte dos encoders
+        motor[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     private double getCurrentDistance(){
         // Calcula a distância percorrida por ambos os motores juntos
         Double[] distance = new Double[2];
         for (int i = 0; i < 2; i++) {
             int ticks = motor[i].getCurrentPosition();
-            double cm = (ticks / 537.6) * (9.66 * Math.PI);
+            double cm = (ticks / TICKS_POR_VOLTA) * (CIRCUNFERENCIA_RODA);
             distance[i] = cm;
         }
         return (distance[0] + distance[1]) / 2.0;
@@ -91,12 +106,11 @@ public class DriveTrain extends OpMode {
         }
         else { // Caso contrário, ele permanece desligado
             motor[2].setPower(0.0);
-            servoTransfer.setPower(0.0);
             intakeLigado = false;
         }
 
         if (gamepad1.right_trigger_pressed){
-            servoTransfer.setPower(-1.0);
+            servoTransfer.setPower(1.0);
             transferLigado = true;
         }
         else{
